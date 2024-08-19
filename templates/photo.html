@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Çekilen Fotoğraflar</title>
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='back.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .photo-container {
+            margin: 50px auto;
+            width: 80%;
+            max-width: 800px;
+            border: 5px solid white;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .photo-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .controls {
+            margin-top: 20px;
+        }
+        a, button {
+            display: inline-block;
+            margin: 20px;
+            font-size: 24px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        button {
+            background-color: #008CBA;
+        }
+    </style>
+</head>
+<body>
+    <div class="photo-container">
+        <h1>Çekilen Fotoğraf</h1>
+        <img src="{{ url_for('static', filename=filenames) }}" alt="Çekilen Fotoğraf">
+    </div>
+    <div class="controls">
+        <a href="{{ url_for('index') }}">Yeniden Çek</a>
+        <button onclick="printPhotos()">Yazdır</button>
+    </div>
+
+    <script>
+        function printPhotos() {
+            fetch('/print_photos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ filenames: ["{{ filenames }}"] })
+            }).then(response => {
+                if (response.ok) {
+                    alert('Fotoğraflar yazdırılıyor!');
+                } else {
+                    alert('Yazdırma işlemi başarısız oldu.');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

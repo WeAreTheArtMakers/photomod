@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photobooth</title>
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='back.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+        }
+        #countdown {
+            font-size: 48px;
+            color: red;
+            margin: 20px;
+        }
+        #capture-button {
+            font-size: 24px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #capture-button:disabled {
+            background-color: #888;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <h1>Photobooth</h1>
+    <div id="countdown"></div>
+    <button id="capture-button" onclick="startCapture()">Fotoğraf Çek</button>
+
+    <script>
+        function startCapture() {
+            var countdown = document.getElementById('countdown');
+            var button = document.getElementById('capture-button');
+            var countdownValue = 5;
+
+            button.disabled = true; // Butonu devre dışı bırak
+
+            var countdownInterval = setInterval(function() {
+                countdown.innerHTML = countdownValue;
+                countdownValue--;
+
+                if (countdownValue < 0) {
+                    clearInterval(countdownInterval);
+                    countdown.innerHTML = "... GÜLÜMSEYİN ...";
+
+                    // Fotoğraf çekimini tetikle
+                    fetch('/start_capture')
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                window.location.href = '/photo/' + data.filenames[0];
+                            } else {
+                                countdown.innerHTML = "Bir hata oluştu.";
+                            }
+                        });
+                }
+            }, 1000); // 1 saniyelik aralıklarla geri sayım
+        }
+    </script>
+</body>
+</html>

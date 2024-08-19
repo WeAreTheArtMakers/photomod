@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fotoğraf Çekimi Seçimi</title>
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='back.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+        }
+
+        #photo-options {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 40px;
+        }
+
+        .photo-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 500px;
+            text-align: center;
+        }
+
+        .photo-option img {
+            width: 100%;
+            height: auto;
+            max-width: 500px;
+            max-height: 500px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .photo-option img:hover {
+            transform: scale(1.05);
+        }
+
+        .photo-option button {
+            font-size: 24px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .photo-option button.secondary {
+            background-color: #008CBA;
+        }
+
+        #countdown {
+            font-size: 48px;
+            color: red;
+            margin: 20px;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Düzeni SEÇ</h1>
+    <div id="photo-options">
+        <div class="photo-option">
+            <img src="{{ url_for('static', filename='sec2.png') }}" alt="Tek Fotoğraf" onclick="chooseOption(1)">
+            <button onclick="chooseOption(1)">Tek Fotoğraf</button>
+        </div>
+        <div class="photo-option">
+            <img src="{{ url_for('static', filename='sec1.png') }}" alt="Dört Fotoğraf" onclick="chooseOption(4)">
+            <button class="secondary" onclick="chooseOption(4)">Dört Fotoğraf</button>
+        </div>
+    </div>
+
+    <div id="countdown">5</div>
+
+    <script>
+        function chooseOption(option) {
+            fetch('/choose_option', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ count: option })
+            }).then(response => {
+                if (response.ok) {
+                    startCapture(option);
+                } else {
+                    alert('Bir hata oluştu.');
+                }
+            });
+        }
+
+        function startCapture(count) {
+            var countdown = document.getElementById('countdown');
+            countdown.style.display = 'block';
+            var captureCount = 1;
+
+            function capturePhoto() {
+                var countdownValue = 5;
+
+                var countdownInterval = setInterval(function() {
+                    countdown.innerHTML = countdownValue;
+                    countdownValue--;
+
+                    if (countdownValue < 0) {
+                        clearInterval(countdownInterval);
+                        countdown.innerHTML = "...GÜLÜMSEYİN...";
+
+                        fetch('/start_capture')
+                            .then(response => response.json())
+                            .then(data => {
+                                if (captureCount < count) {
+                                    captureCount++;
+                                    countdown.innerHTML = "5";
+                                    capturePhoto();
+                                } else {
+                                    window.location.href = '/photo/' + data.filenames[0];
+                                }
+                            });
+                    }
+                }, 1000);
+            }
+
+            capturePhoto();
+        }
+    </script>
+</body>
+</html>
