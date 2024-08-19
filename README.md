@@ -22,7 +22,7 @@
 
 Gerekli Python kütüphanelerini yüklemek için aşağıdaki komutu çalıştırın:
 
-```bash
+```bash 
 pip install -r requirements.txt
 
 ### 2. CUPS Kurulumu
@@ -77,6 +77,8 @@ bash
 Kodu kopyala
 sudo systemctl enable photomod.service
 sudo systemctl start photomod.service
+
+! [ ARAYUZ / GUI Logo](https://wearetheartmakers.com/us/images/2024/08/19/photomod.jpg)
 
 
 ## Kullanım
