@@ -80,7 +80,7 @@ sudo systemctl enable photomod.service
 sudo systemctl start photomod.service
 
 
-! [ ARAYUZ / GUI Logo](https://wearetheartmakers.com/us/images/2024/08/19/photomod.jpg)
+![ARAYUZ ](https://wearetheartmakers.com/us/images/2024/08/19/photomod.jpg)
 
 ## Kullanım
 
