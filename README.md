@@ -16,20 +16,21 @@
 - libcamera
 - CUPS (yazıcı desteği için)
 
+
 ## Kurulum
 
 ### 1. Gerekli Kütüphaneleri Yükleme
 
 Gerekli Python kütüphanelerini yüklemek için aşağıdaki komutu çalıştırın:
 
-```bash 
+bash 
 pip install -r requirements.txt
 
 ### 2. CUPS Kurulumu
 
 CUPS yazıcı hizmetini yükleyin ve yapılandırın:
 
-```bash
+bash
 sudo apt-get install cups
 sudo usermod -aG lpadmin pi
 sudo systemctl restart cups
@@ -38,21 +39,21 @@ sudo systemctl restart cups
 
 Raspberry Pi üzerindeki kamerayı etkinleştirmek için `raspi-config` aracını kullanın. Kamera modülünü etkinleştirdikten sonra, `picamera2` kütüphanesini kullanarak fotoğraf çekimi sağlayabilirsiniz. Bunun için:
 
-```bash
+bash
 sudo raspi-config
 
 ### 5. Uygulamayı Başlatma
 
 Flask uygulamasını başlatmak için aşağıdaki komutu kullanın:
 
-```bash
+bash
 python3 app.py
 
 ### 6. Otomatik Başlatma Ayarı
 
 PhotoMod uygulamasını Raspberry Pi açılışında otomatik olarak çalışacak şekilde ayarlamak için, aşağıdaki adımları izleyin:
 
-```bash
+bash
 sudo nano /etc/systemd/system/photomod.service
 
 [Unit]
@@ -78,8 +79,8 @@ Kodu kopyala
 sudo systemctl enable photomod.service
 sudo systemctl start photomod.service
 
-! [ ARAYUZ / GUI Logo](https://wearetheartmakers.com/us/images/2024/08/19/photomod.jpg)
 
+! [ ARAYUZ / GUI Logo](https://wearetheartmakers.com/us/images/2024/08/19/photomod.jpg)
 
 ## Kullanım
 
