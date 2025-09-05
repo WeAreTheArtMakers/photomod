@@ -1,5 +1,5 @@
 # PhotoMod
-
+[![Sponsor](https://img.shields.io/badge/Sponsor-❤-brightgreen)](https://github.com/sponsors/WeAreTheArtMakers)
 ![PhotoMod Logo](https://wearetheartmakers.com/us/images/2024/08/19/photomodLOGO.png)
 
 **PhotoMod**, Raspberry Pi 4B üzerinde çalışan bir fotoğraf kabini (photobooth) uygulamasıdır. Bu uygulama ile kullanıcılar, çeşitli fotoğraf seçeneklerinden birini seçip fotoğraf çekebilir ve bu fotoğrafları yazdırabilirler. Uygulama, Flask, Pygame ve Pillow gibi kütüphaneler kullanılarak geliştirilmiştir ve fotoğraf işleme, ses efektleri gibi özellikleri destekler.
